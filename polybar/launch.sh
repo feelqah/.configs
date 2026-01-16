@@ -17,15 +17,10 @@ launch_bar() {
 	elif [[ "$style" == "pwidgets" ]]; then
 		bash "$dir"/pwidgets/launch.sh --main
 	else
-		#polybar -q main -c "$dir/$style/config.ini" &	
 		for m in $(polybar --list-monitors | cut -d":" -f1); do
-			tray_pos="none"
-			echo "$m"                                                                
-        		if [ "$m" == "eDP-1" ]; then                                        
-            			tray_pos="right"                                                       
-        		fi
-    			MONITOR=$m TRAY_POS=$tray_pos polybar --reload main -c "$dir/$style/config.ini"  2>&1 | tee -a /tmp/polybar.log & disown
+    			MONITOR=$m polybar -q main -c "$dir/$style/config.ini" &
 		done
+
 	fi
 }
 
